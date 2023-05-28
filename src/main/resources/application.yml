@@ -1,1 +1,6 @@
-
+#Database Connection
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pawandfeet
+    username: postgres
+    password: pawandfeet
