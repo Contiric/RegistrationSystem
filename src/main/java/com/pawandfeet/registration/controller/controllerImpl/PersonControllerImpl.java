@@ -1,8 +1,8 @@
 package com.pawandfeet.registration.controller.controllerImpl;
 
 import com.pawandfeet.registration.controller.PersonController;
+import com.pawandfeet.registration.dto.PersonDTO;
 import com.pawandfeet.registration.entities.Person;
-import com.pawandfeet.registration.repositories.PersonRepository;
 import com.pawandfeet.registration.services.PersonService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,29 +19,39 @@ public class PersonControllerImpl implements PersonController {
 
 
     @Autowired
-    private PersonRepository personRepository;
-
-    @Autowired
     private PersonService personService;
 
     @Override
-    public ResponseEntity<Person> createPerson(Person person) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(personRepository.save(person));
+    @PostMapping
+    public ResponseEntity createPerson(@RequestBody PersonDTO personDTO) {
+        //try
+        PersonDTO person = personService.createPerson(personDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(person);
     }
 
     @Override
-    public ResponseEntity<Optional<Person>> findByIdPerson(Long id) {
-        return ResponseEntity.ok(personRepository.findById(id));
+    @GetMapping("/{id}")
+    public ResponseEntity findPersonByID(@PathVariable("id") Long id) {
+        //try
+        PersonDTO person = personService.findPersonById(id);
+        return ResponseEntity.ok().body(person);
     }
 
     @Override
-    public ResponseEntity<Person> updatePerson(Person person) {
-        return ResponseEntity.ok(personRepository.save(person));
+    @PutMapping
+    public ResponseEntity updatePerson(@PathVariable("id") Long id, @RequestBody PersonDTO personDTO) {
+        try {
+            PersonDTO person = personService.updatePerson(id, personDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(person);
+        } catch (Exception ex) {
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @Override
+    @DeleteMapping("/{id}")
     public void deletePerson(Long id) {
-        personRepository.deleteById(id);
+        personService.deletePerson(id);
 
     }
 }

@@ -1,5 +1,6 @@
 package com.pawandfeet.registration.services;
 
+import com.pawandfeet.registration.dto.PersonDTO;
 import com.pawandfeet.registration.entities.Person;
 
 import java.util.Optional;
@@ -7,15 +8,15 @@ import java.util.Optional;
 public interface PersonService {
 
     //createPerson
-    void createPerson(Person person);
+    PersonDTO createPerson(PersonDTO personDTO);
     //findById
-    Optional<Person> personFindById(Long id);
+    PersonDTO findPersonById(Long id);
 
     //updatePerson
-    Person updatePerson(Long id, Person person);
+    PersonDTO updatePerson(Long id, PersonDTO personDTO);
 
     //deletePerson
-    void deletePerson(Person person);
+    void deletePerson(Long id);
 
     //associateDog
     //void associateDog(Long id, Person person, Dog dog);

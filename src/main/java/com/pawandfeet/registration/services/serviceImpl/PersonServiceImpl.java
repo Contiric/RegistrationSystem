@@ -1,5 +1,6 @@
 package com.pawandfeet.registration.services.serviceImpl;
 
+import com.pawandfeet.registration.dto.PersonDTO;
 import com.pawandfeet.registration.entities.Person;
 import com.pawandfeet.registration.repositories.PersonRepository;
 import com.pawandfeet.registration.services.PersonService;
@@ -15,26 +16,40 @@ public class PersonServiceImpl implements PersonService {
     PersonRepository personRepository;
 
     @Override
-    public void createPerson(Person person) {
-        personRepository.save(person);
+    public PersonDTO createPerson(PersonDTO personDTO) {
+        return personRepository.save(personDTO.toPerson()).toPersonDTO();
     }
 
     @Override
-    public Optional<Person> personFindById(Long id) {
-        return personRepository.findById(id);
+    public PersonDTO findPersonById(Long id) {
+        try {
+            Person person = personRepository.findById(id).orElseThrow();
+            return person.toPersonDTO();
+        } catch (Exception ex) {
+            //TODO
+            return null;
+        }
     }
 
     @Override
-    public Person updatePerson(Long id, Person person) {
-        Optional<Person> optionalPerson = personFindById(id);
-        Person updatedPerson = optionalPerson.orElse(person);
-        updatedPerson.setEmail(person.getEmail());
-        updatedPerson.setPhone(person.getPhone());
-        return personRepository.save(updatedPerson);
+    public PersonDTO updatePerson(Long id, PersonDTO personDTO) {
+        try {
+            Person person = personRepository.findById(id).orElseThrow();
+            person.updatePerson(personDTO);
+            return personRepository.save(person).toPersonDTO();
+        } catch (Exception exception) {
+            //TODO
+            return null;
+        }
     }
 
     @Override
-    public void deletePerson(Person person) {
-        personRepository.delete(person);
+    public void deletePerson(Long id) {
+        try {
+            personRepository.deleteById(id);
+        } catch (Exception ex) {
+            //TODO
+        }
     }
+
 }
