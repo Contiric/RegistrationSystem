@@ -14,15 +14,14 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/person")
+@RequestMapping(path = PersonControllerImpl.PATH)
 public class PersonControllerImpl implements PersonController {
-
 
     @Autowired
     private PersonService personService;
 
     @Override
-    @PostMapping
+    @PostMapping("createPerson")
     public ResponseEntity createPerson(@RequestBody PersonDTO personDTO) {
         //try
         PersonDTO person = personService.createPerson(personDTO);
@@ -30,7 +29,7 @@ public class PersonControllerImpl implements PersonController {
     }
 
     @Override
-    @GetMapping("/{id}")
+    @GetMapping("findById/{id}")
     public ResponseEntity findPersonByID(@PathVariable("id") Long id) {
         //try
         PersonDTO person = personService.findPersonById(id);
@@ -38,7 +37,7 @@ public class PersonControllerImpl implements PersonController {
     }
 
     @Override
-    @PutMapping
+    @PutMapping("updatePerson")
     public ResponseEntity updatePerson(@PathVariable("id") Long id, @RequestBody PersonDTO personDTO) {
         try {
             PersonDTO person = personService.updatePerson(id, personDTO);
@@ -49,9 +48,8 @@ public class PersonControllerImpl implements PersonController {
     }
 
     @Override
-    @DeleteMapping("/{id}")
+    @DeleteMapping("deletePerson/{id}")
     public void deletePerson(Long id) {
         personService.deletePerson(id);
-
     }
 }

@@ -14,6 +14,8 @@ import java.util.Optional;
 
 public interface PersonController {
 
+    public static final String PATH = "/api/pawandfeet";
+
     public ResponseEntity createPerson(PersonDTO personDTO);
 
     public ResponseEntity findPersonByID( Long id);
