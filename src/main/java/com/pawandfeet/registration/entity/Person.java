@@ -1,10 +1,7 @@
-package com.pawandfeet.registration.entities;
+package com.pawandfeet.registration.entity;
 
 import com.pawandfeet.registration.dto.PersonDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,21 +18,24 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "person_Id")
     private Long id;
+
     private String name;
-    private Date birthdate;
+
+    private Date birthDate;
+
     private String email;
+
     private String phone;
 
-    //private Address idAddress;
-    //private Dog idDog;
-//    @Enumerated(EnumType.STRING)
-//    private Enum gender;
+    @Enumerated(EnumType.STRING)
+    private GenderEnum gender;
 
     public PersonDTO toPersonDTO() {
         return PersonDTO.builder()
                 .name(this.name)
-                .birthdate(this.birthdate)
+                .birthDate(this.birthDate)
                 .email(this.email)
                 .phone(this.phone)
                 .build();
@@ -43,7 +43,7 @@ public class Person {
 
     public void updatePerson(PersonDTO personDTO) {
         if (!personDTO.getName().isBlank()){this.name = personDTO.getName();}
-        if (!personDTO.getName().isBlank()){this.birthdate = personDTO.getBirthdate();}
+        if (!personDTO.getName().isBlank()){this.birthDate = personDTO.getBirthDate();}
         if (!personDTO.getName().isBlank()){this.email = personDTO.getEmail();}
         if (!personDTO.getName().isBlank()){this.phone = personDTO.getPhone();}
     }

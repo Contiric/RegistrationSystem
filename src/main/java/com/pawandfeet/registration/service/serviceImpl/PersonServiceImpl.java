@@ -1,13 +1,11 @@
-package com.pawandfeet.registration.services.serviceImpl;
+package com.pawandfeet.registration.service.serviceImpl;
 
 import com.pawandfeet.registration.dto.PersonDTO;
-import com.pawandfeet.registration.entities.Person;
-import com.pawandfeet.registration.repositories.PersonRepository;
-import com.pawandfeet.registration.services.PersonService;
+import com.pawandfeet.registration.entity.Person;
+import com.pawandfeet.registration.repository.PersonRepository;
+import com.pawandfeet.registration.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -16,8 +14,8 @@ public class PersonServiceImpl implements PersonService {
     PersonRepository personRepository;
 
     @Override
-    public PersonDTO createPerson(PersonDTO personDTO) {
-        return personRepository.save(personDTO.toPerson()).toPersonDTO();
+    public Long createPerson(PersonDTO personDTO) {
+        return personRepository.save(personDTO.toPerson()).getId();
     }
 
     @Override

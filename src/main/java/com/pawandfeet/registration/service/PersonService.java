@@ -1,13 +1,10 @@
-package com.pawandfeet.registration.services;
+package com.pawandfeet.registration.service;
 
 import com.pawandfeet.registration.dto.PersonDTO;
-import com.pawandfeet.registration.entities.Person;
-
-import java.util.Optional;
 
 public interface PersonService {
 
-    PersonDTO createPerson(PersonDTO personDTO);
+    Long createPerson(PersonDTO personDTO);
     PersonDTO findPersonById(Long id);
     PersonDTO updatePerson(Long id, PersonDTO personDTO);
     void deletePerson(Long id);

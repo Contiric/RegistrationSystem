@@ -1,6 +1,6 @@
-package com.pawandfeet.registration.repositories;
+package com.pawandfeet.registration.repository;
 
-import com.pawandfeet.registration.entities.Person;
+import com.pawandfeet.registration.entity.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
