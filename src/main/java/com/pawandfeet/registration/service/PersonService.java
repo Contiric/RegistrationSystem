@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 public interface PersonService {
 
     Logger logger = Logger.getLogger(String.valueOf(PersonService.class));
-
     Long createPerson(PersonDTO personDTO);
     PersonDTO findPersonById(Long id);
     PersonDTO updatePerson(Long id, PersonDTO personDTO);

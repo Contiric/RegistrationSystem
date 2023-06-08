@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 public class DogServiceImpl implements DogService {
@@ -24,9 +25,15 @@ public class DogServiceImpl implements DogService {
     private PersonRepository personRepository;
 
     @Override
-    public Long createDog(DogDTO dogDTO) throws PersonNotFoundException {
-        personRepository.findById(dogDTO.getPersonId()).orElseThrow(PersonNotFoundException::new);
-        return dogRepository.save(dogDTO.toDog()).getId();
+    public Long createDog(DogDTO dogDTO){
+        try {
+            personRepository.findById(dogDTO.getPersonId()).orElseThrow(PersonNotFoundException::new);
+            logger.info("Dog created");
+            return dogRepository.save(dogDTO.toDog()).getId();
+        } catch (PersonNotFoundException e) {
+            logger.info(e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     @Override

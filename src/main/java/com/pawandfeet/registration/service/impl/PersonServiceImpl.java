@@ -1,8 +1,6 @@
 package com.pawandfeet.registration.service.impl;
 
-import com.pawandfeet.registration.dto.AddressDTO;
 import com.pawandfeet.registration.dto.PersonDTO;
-import com.pawandfeet.registration.entity.Address;
 import com.pawandfeet.registration.entity.Person;
 import com.pawandfeet.registration.exception.PersonNotFoundException;
 import com.pawandfeet.registration.repository.PersonRepository;
@@ -27,16 +25,19 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Long createPerson(PersonDTO personDTO) {
         Long personId = personRepository.save(personDTO.toPerson()).getId();
-        addressService.createAddress(personDTO.getAddressDTO().addPerson(personId));
+        Long addresId = addressService.createAddress(personDTO.getAddressDTO().addPerson(personId));
         personDTO.getDogsDTO().forEach(dogDTO -> {
             try {
                 dogDTO.setPersonId(personId);
                 dogService.createDog(dogDTO);
             } catch (PersonNotFoundException e) {
+                addressService.deleteAddress(addresId);
+                deletePerson(personId);
                 logger.info(e.getMessage());
                 throw new RuntimeException();
             }
         });
+        logger.info("Person created");
         return personId;
     }
 

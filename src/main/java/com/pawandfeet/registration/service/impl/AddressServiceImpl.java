@@ -15,7 +15,9 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Long createAddress(AddressDTO addressDTO) {
-        return addressRepository.save(addressDTO.toAddress()).getId();
+        Long addressId = addressRepository.save(addressDTO.toAddress()).getId();
+        logger.info("Address created");
+        return addressId;
     }
 
     @Override
@@ -25,7 +27,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void removeAddress(Long addressId) {
+    public void deleteAddress(Long addressId) {
 
     }
 
