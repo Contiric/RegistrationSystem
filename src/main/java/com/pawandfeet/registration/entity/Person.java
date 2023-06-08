@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 
 import java.util.Date;
 
@@ -42,9 +43,6 @@ public class Person {
     }
 
     public void updatePerson(PersonDTO personDTO) {
-        if (!personDTO.getName().isBlank()){this.name = personDTO.getName();}
-        if (!personDTO.getName().isBlank()){this.birthDate = personDTO.getBirthDate();}
-        if (!personDTO.getName().isBlank()){this.email = personDTO.getEmail();}
-        if (!personDTO.getName().isBlank()){this.phone = personDTO.getPhone();}
+        BeanUtils.copyProperties(this, personDTO, "id");
     }
 }

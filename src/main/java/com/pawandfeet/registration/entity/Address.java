@@ -1,8 +1,12 @@
 package com.pawandfeet.registration.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
 
 @Entity
+@Getter
+@Builder
 public class Address {
 
     @Id
@@ -13,5 +17,6 @@ public class Address {
     private String city;
     private String state;
     private String country;
+    private Long personId;
 
 }

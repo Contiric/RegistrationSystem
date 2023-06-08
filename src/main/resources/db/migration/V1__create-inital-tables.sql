@@ -21,7 +21,7 @@ create table dog (
 create table person (
     person_id serial primary key,
     name varchar(255),
-    birthdate date,
+    birth_date date,
     email varchar(255),
     phone varchar(50),
     location varchar(255),

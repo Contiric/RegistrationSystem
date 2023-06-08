@@ -1,4 +1,4 @@
-package com.pawandfeet.registration.controller.controllerImpl;
+package com.pawandfeet.registration.controller.impl;
 
 import com.pawandfeet.registration.controller.DogController;
 import com.pawandfeet.registration.dto.DogDTO;
@@ -7,6 +7,7 @@ import com.pawandfeet.registration.exception.PersonNotFoundException;
 import com.pawandfeet.registration.service.DogService;
 import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = DogController.PATH)
 public class DogControllerImp implements DogController {
 
-    DogService dogService;
+    @Autowired
+    private DogService dogService;
 
     @Override
     @PostMapping(path = "/createDog")

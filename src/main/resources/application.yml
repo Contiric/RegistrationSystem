@@ -1,6 +1,12 @@
 #Database Connectiondbmifratio
+#spring:
+#  datasource:
+#    url: ENC(QKIUvKYW4LHFraf4pg7pbV+YTDBXwhtw3eaRqrbNnNwHJIiUFam36lbGZNIBQbofjY81SMlR/d/l6oCwKK4MSgJKpfGkGE+r0V62U4VHXj8=)
+#    username: ENC(zvoHljVzMTAGQP6eay9veNyO48cOJC8y)
+#    password: ENC(iQvlgdWQGGDqQ54zdpBQSxxFtpVYs3/plJOooC+sbK4=)
+
 spring:
   datasource:
-    url: ENC(QKIUvKYW4LHFraf4pg7pbV+YTDBXwhtw3eaRqrbNnNwHJIiUFam36lbGZNIBQbofjY81SMlR/d/l6oCwKK4MSgJKpfGkGE+r0V62U4VHXj8=)
-    username: ENC(zvoHljVzMTAGQP6eay9veNyO48cOJC8y)
-    password: ENC(iQvlgdWQGGDqQ54zdpBQSxxFtpVYs3/plJOooC+sbK4=)
+    url: jdbc:postgresql://localhost:5432/pawandfeet
+    username: postgres
+    password: pawandfeet

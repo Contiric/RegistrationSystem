@@ -1,7 +1,9 @@
-package com.pawandfeet.registration.controller.controllerImpl;
+package com.pawandfeet.registration.controller.impl;
 
 import com.pawandfeet.registration.controller.PersonController;
 import com.pawandfeet.registration.dto.PersonDTO;
+import com.pawandfeet.registration.exception.DogNotFoundException;
+import com.pawandfeet.registration.service.DogService;
 import com.pawandfeet.registration.service.PersonService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

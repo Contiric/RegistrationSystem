@@ -1,5 +1,6 @@
 package com.pawandfeet.registration.dto;
 
+import com.pawandfeet.registration.entity.Address;
 import com.pawandfeet.registration.entity.Person;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,7 @@ public class PersonDTO {
     private String phone;
     private String gender;
     private List<DogDTO> dogsDTO;
+    private AddressDTO addressDTO;
 
     public Person toPerson() {
         return Person.builder()

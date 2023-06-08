@@ -1,4 +1,4 @@
-package com.pawandfeet.registration.service.serviceImpl;
+package com.pawandfeet.registration.service.impl;
 
 import com.pawandfeet.registration.dto.DogDTO;
 import com.pawandfeet.registration.entity.Dog;
@@ -20,34 +20,29 @@ public class DogServiceImpl implements DogService {
     @Autowired
     private DogRepository dogRepository;
 
+    @Autowired
     private PersonRepository personRepository;
 
     @Override
     public Long createDog(DogDTO dogDTO) throws PersonNotFoundException {
-        Optional<Person> person = personRepository.findById(dogDTO.getPersonId());
-        if (person.isEmpty()) throw new PersonNotFoundException();
+        personRepository.findById(dogDTO.getPersonId()).orElseThrow(PersonNotFoundException::new);
         return dogRepository.save(dogDTO.toDog()).getId();
     }
 
     @Override
     public void updateDog(Long id, DogDTO dogDTO) throws DogNotFoundException {
-        Optional<Dog> dog = dogRepository.findById(id);
-        if (dog.isEmpty()) throw new DogNotFoundException();
-        BeanUtils.copyProperties(dog.get(), dogDTO, "id");
-        dogRepository.save(dog.get());
+        Dog dog = dogRepository.findById(id).orElseThrow(DogNotFoundException::new).updateDog(dogDTO);
+        dogRepository.save(dog);
     }
 
     @Override
     public DogDTO findDogById(Long id) throws DogNotFoundException {
-        Optional<Dog> dog = dogRepository.findById(id);
-        if (dog.isEmpty()) throw new DogNotFoundException();
-        return dog.get().toDogDTO();
+        return dogRepository.findById(id).orElseThrow(DogNotFoundException::new).toDogDTO();
     }
 
     @Override
     public void deleteDog(Long id) throws DogNotFoundException {
-        Optional<Dog> dog = dogRepository.findById(id);
-        if (dog.isEmpty()) throw new DogNotFoundException();
-        dogRepository.delete(dog.get());
+        Dog dog = dogRepository.findById(id).orElseThrow(DogNotFoundException::new);
+        dogRepository.delete(dog);
     }
 }
