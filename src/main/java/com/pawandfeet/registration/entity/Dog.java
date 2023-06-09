@@ -4,6 +4,7 @@ import com.pawandfeet.registration.dto.DogDTO;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
 
@@ -19,7 +20,6 @@ public class Dog {
 
     private String name;
 
-    @Column(name = "birthdate")
     private LocalDate birthDate;
 
     private String breed;
@@ -44,5 +44,10 @@ public class Dog {
                 .personality(this.personality.toString())
                 .gender(this.gender.toString())
                 .build();
+    }
+
+    public Dog updateDog(DogDTO dogDTO) {
+        BeanUtils.copyProperties(this, dogDTO, "id");
+        return this;
     }
 }

@@ -1,7 +1,6 @@
 package com.pawandfeet.registration.controller;
 
 import com.pawandfeet.registration.dto.DogDTO;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 
 public interface DogController {
