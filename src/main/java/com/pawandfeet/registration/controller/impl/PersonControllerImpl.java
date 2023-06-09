@@ -1,4 +1,4 @@
-package com.pawandfeet.registration.controller.controllerImpl;
+package com.pawandfeet.registration.controller.impl;
 
 import com.pawandfeet.registration.controller.PersonController;
 import com.pawandfeet.registration.dto.PersonDTO;
