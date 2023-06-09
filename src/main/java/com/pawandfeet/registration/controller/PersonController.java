@@ -15,5 +15,5 @@ public interface PersonController {
 
     public ResponseEntity<Person> updatePerson(Long id, PersonDTO personDTO);
 
-    public void deletePerson(@PathVariable("id") Long id);
+    public Object deletePerson(@PathVariable("id") Long id);
 }

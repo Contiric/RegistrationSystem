@@ -2,7 +2,9 @@ package com.pawandfeet.registration.controller.controllerImpl;
 
 import com.pawandfeet.registration.controller.PersonController;
 import com.pawandfeet.registration.dto.PersonDTO;
+import com.pawandfeet.registration.exception.PersonNotFoundException;
 import com.pawandfeet.registration.service.PersonService;
+import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,16 +22,22 @@ public class PersonControllerImpl implements PersonController {
     @Override
     @PostMapping("createPerson")
     public ResponseEntity createPerson(@RequestBody PersonDTO personDTO) {
-        //try
-        return ResponseEntity.status(HttpStatus.CREATED).body(personService.createPerson(personDTO));
+        try {
+            return ResponseEntity.status(HttpStatus.CREATED).body(personService.createPerson(personDTO));
+        } catch (PersonNotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).eTag(exception.getMessage()).build();
+        }
     }
 
     @Override
     @GetMapping("findById/{id}")
     public ResponseEntity findPersonByID(@PathVariable("id") Long id) {
-        //try
-        PersonDTO person = personService.findPersonById(id);
-        return ResponseEntity.ok().body(person);
+        try {
+            PersonDTO person = personService.findPersonById(id);
+            return ResponseEntity.ok().body(person);
+        } catch (PersonNotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).eTag(exception.getMessage()).build();
+        }
     }
 
     @Override
@@ -38,14 +46,19 @@ public class PersonControllerImpl implements PersonController {
         try {
             PersonDTO person = personService.updatePerson(id, personDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(person);
-        } catch (Exception ex) {
-            return  ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).eTag(exception.getMessage()).build();
         }
     }
 
     @Override
     @DeleteMapping("deletePerson/{id}")
-    public void deletePerson(Long id) {
-        personService.deletePerson(id);
+    public Object deletePerson(@PathParam("id") Long id) {
+        try {
+            personService.deletePerson(id);
+            return ResponseEntity.status(HttpStatus.OK);
+        } catch (PersonNotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).eTag(exception.getMessage());
+        }
     }
 }

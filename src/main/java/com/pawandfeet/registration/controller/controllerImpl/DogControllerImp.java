@@ -23,7 +23,7 @@ public class DogControllerImp implements DogController {
     public Object createDog(@RequestBody DogDTO dogDTO) {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(dogService.createDog(dogDTO));
-        } catch (PersonNotFoundException exception) {
+        } catch (DogNotFoundException exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).eTag(exception.getMessage());
         }
     }
