@@ -18,6 +18,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class DogDTO {
 
+    private Long id;
     private String name;
     private LocalDate birthDate;
     private String breed;
@@ -28,6 +29,7 @@ public class DogDTO {
 
     public Dog toDog() {
         return Dog.builder()
+                .id(this.id)
                 .name(this.name)
                 .birthDate(this.birthDate)
                 .breed(this.breed)

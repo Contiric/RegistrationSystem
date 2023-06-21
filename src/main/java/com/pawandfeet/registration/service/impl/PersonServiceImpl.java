@@ -10,6 +10,8 @@ import com.pawandfeet.registration.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class PersonServiceImpl implements PersonService {
 
@@ -22,10 +24,15 @@ public class PersonServiceImpl implements PersonService {
     @Autowired
     private AddressService addressService;
 
+
     @Override
     public Long createPerson(PersonDTO personDTO) {
         Long personId = personRepository.save(personDTO.toPerson()).getId();
-        Long addresId = addressService.createAddress(personDTO.getAddressDTO().addPerson(personId));
+        if (personId == null){
+            throw new PersonNotFoundException();
+        }
+            Long addresId = addressService.createAddress(personDTO.getAddressDTO().addPerson(personId));
+
         personDTO.getDogsDTO().forEach(dogDTO -> {
             try {
                 dogDTO.setPersonId(personId);
@@ -36,6 +43,7 @@ public class PersonServiceImpl implements PersonService {
                 logger.info(e.getMessage());
                 throw new RuntimeException();
             }
+
         });
         logger.info("Person created");
         return personId;
@@ -45,9 +53,9 @@ public class PersonServiceImpl implements PersonService {
     public PersonDTO findPersonById(Long id) {
         try {
             return personRepository.findById(id).orElseThrow(PersonNotFoundException::new).toPersonDTO();
-        } catch (Exception ex) {
-            //TODO
-            return null;
+        } catch (PersonNotFoundException ex) {
+            logger.info(ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
         }
     }
 
@@ -57,9 +65,9 @@ public class PersonServiceImpl implements PersonService {
             Person person = personRepository.findById(id).orElseThrow();
             person.updatePerson(personDTO);
             return personRepository.save(person).toPersonDTO();
-        } catch (Exception exception) {
-            //TODO
-            return null;
+        } catch (PersonNotFoundException ex) {
+            logger.info(ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
         }
     }
 
@@ -67,8 +75,9 @@ public class PersonServiceImpl implements PersonService {
     public void deletePerson(Long id) {
         try {
             personRepository.deleteById(id);
-        } catch (Exception ex) {
-            //TODO
+        } catch (PersonNotFoundException ex) {
+            logger.info(ex.getMessage());
+            throw  new RuntimeException(ex.getMessage());
         }
     }
 

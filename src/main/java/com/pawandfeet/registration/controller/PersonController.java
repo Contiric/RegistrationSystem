@@ -9,7 +9,7 @@ public interface PersonController {
 
     public static final String PATH = "/api/pawandfeet";
 
-    public ResponseEntity createPerson(PersonDTO personDTO);
+    public Object createPerson(PersonDTO personDTO);
 
     public ResponseEntity findPersonByID( Long id);
 

@@ -21,9 +21,10 @@ public class PersonControllerImpl implements PersonController {
 
     @Override
     @PostMapping("createPerson")
-    public ResponseEntity createPerson(@RequestBody PersonDTO personDTO) {
+    public Object createPerson(@RequestBody PersonDTO personDTO) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(personService.createPerson(personDTO));
+            personService.createPerson(personDTO);
+            return ResponseEntity.status(HttpStatus.OK);
         } catch (PersonNotFoundException exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).eTag(exception.getMessage()).build();
         }
