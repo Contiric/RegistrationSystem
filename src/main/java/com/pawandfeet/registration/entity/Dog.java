@@ -2,8 +2,10 @@ package com.pawandfeet.registration.entity;
 
 import com.pawandfeet.registration.dto.DogDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
@@ -11,6 +13,8 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Dog {
 
     @Id
@@ -43,6 +47,7 @@ public class Dog {
                 .size(this.size.toString())
                 .personality(this.personality.toString())
                 .gender(this.gender.toString())
+                .personId(this.personId)
                 .build();
     }
 
