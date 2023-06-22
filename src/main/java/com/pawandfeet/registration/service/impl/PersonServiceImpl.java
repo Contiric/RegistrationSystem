@@ -31,16 +31,18 @@ public class PersonServiceImpl implements PersonService {
         if (personId == null){
             throw new PersonNotFoundException();
         }
-            Long addresId = addressService.createAddress(personDTO.getAddressDTO().addPerson(personId));
+        Long addressId = addressService.createAddress(personDTO.getAddressDTO().addPerson(personId));
 
         personDTO.getDogsDTO().forEach(dogDTO -> {
             try {
                 dogDTO.setPersonId(personId);
                 dogService.createDog(dogDTO);
-            } catch (PersonNotFoundException e) {
-                addressService.deleteAddress(addresId);
+            } catch (PersonNotFoundException exception) {
+                addressService.deleteAddress(addressId);
+                logger.info("Address deleted");
                 deletePerson(personId);
-                logger.info(e.getMessage());
+                logger.info("Person deleted");
+                logger.info(exception.getMessage());
                 throw new RuntimeException();
             }
 

@@ -10,7 +10,6 @@ import lombok.*;
 @Builder
 public class AddressDTO {
 
-    private Long id;
     private String street;
     private String city;
     private String state;
@@ -19,7 +18,6 @@ public class AddressDTO {
 
     public Address toAddress(){
         return Address.builder()
-                .id(this.id)
                 .state(this.street)
                 .city(this.city)
                 .state(this.state)

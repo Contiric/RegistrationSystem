@@ -1,11 +1,12 @@
 package com.pawandfeet.registration.entity;
 
 import com.pawandfeet.registration.dto.AddressDTO;
-import com.pawandfeet.registration.dto.PersonDTO;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
 @Entity
 @Getter
 @Builder
@@ -25,7 +26,6 @@ public class Address {
 
     public AddressDTO toAddressDTO() {
         return AddressDTO.builder()
-                .id(this.id)
                 .street(this.street)
                 .city(this.city)
                 .state(this.state)

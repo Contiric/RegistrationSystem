@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class Person {
 
     private String name;
 
-    private Date birthDate;
+    private LocalDate birthDate;
 
     private String email;
 
@@ -39,10 +40,6 @@ public class Person {
     @Enumerated(EnumType.STRING)
     private GenderEnum gender;
 
-    private List<Dog> dogs;
-
-    private Address address;
-
     public PersonDTO toPersonDTO() {
         return PersonDTO.builder()
                 .name(this.name)
@@ -50,8 +47,6 @@ public class Person {
                 .email(this.email)
                 .phone(this.phone)
                 .gender(this.gender)
-                .dogsDTO(this.convertObjectToDTO(dogs))
-                .addressDTO(this.address.toAddressDTO())
                 .build();
     }
 
