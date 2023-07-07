@@ -1,6 +1,7 @@
 package com.pawandfeet.registration.service.impl;
 
 import com.pawandfeet.registration.dto.AddressDTO;
+import com.pawandfeet.registration.entity.Address;
 import com.pawandfeet.registration.exception.AddressNotFoundException;
 import com.pawandfeet.registration.repository.AddressRepository;
 import com.pawandfeet.registration.service.AddressService;
@@ -21,18 +22,18 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public AddressDTO updateAddress(Long addressId, AddressDTO addressDTO) throws AddressNotFoundException {
-        addressRepository.findById(addressId).orElseThrow(AddressNotFoundException::new);
-        return null;
+    public AddressDTO findAddressById(Long addressId) {
+        return addressRepository.findById(addressId).orElseThrow(AddressNotFoundException::new).toAddressDTO();
     }
 
+    @Override
+    public AddressDTO updateAddress(Long addressId, AddressDTO addressDTO) throws AddressNotFoundException {
+        Address address = addressRepository.findById(addressId).orElseThrow(AddressNotFoundException::new);
+        return addressRepository.save(address).toAddressDTO();
+    }
     @Override
     public void deleteAddress(Long addressId) {
-
-    }
-
-    @Override
-    public AddressDTO findAddressById(Long addressId) {
-        return null;
+        Address address = addressRepository.findById(addressId).orElseThrow(AddressNotFoundException::new);
+        addressRepository.delete(address);
     }
 }

@@ -27,7 +27,7 @@ public class DogServiceImpl implements DogService {
     @Override
     public Long createDog(DogDTO dogDTO){
         try {
-            personRepository.findById(dogDTO.getPersonId()).orElseThrow(PersonNotFoundException::new);
+            personRepository.findById(dogDTO.getPersonId());
             logger.info("Dog created");
             return dogRepository.save(dogDTO.toDog()).getId();
         } catch (PersonNotFoundException e) {
@@ -37,18 +37,18 @@ public class DogServiceImpl implements DogService {
     }
 
     @Override
-    public void updateDog(Long id, DogDTO dogDTO) throws DogNotFoundException {
-        Dog dog = dogRepository.findById(id).orElseThrow(DogNotFoundException::new).updateDog(dogDTO);
-        dogRepository.save(dog);
-    }
-
-    @Override
     public DogDTO findDogById(Long id) throws DogNotFoundException {
         return dogRepository.findById(id).orElseThrow(DogNotFoundException::new).toDogDTO();
     }
 
     @Override
-    public void deleteDog(Long id) throws DogNotFoundException {
+    public DogDTO updateDog(Long id, DogDTO dogDTO) throws DogNotFoundException {
+        Dog dog = dogRepository.findById(id).orElseThrow(DogNotFoundException::new).updateDog(dogDTO);
+        return dogRepository.save(dog).toDogDTO();
+    }
+
+    @Override
+    public void deleteDog(Long id) {
         Dog dog = dogRepository.findById(id).orElseThrow(DogNotFoundException::new);
         dogRepository.delete(dog);
     }

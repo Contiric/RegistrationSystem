@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
+import org.hibernate.engine.jdbc.Size;
 
 import java.time.LocalDate;
 
@@ -18,24 +19,22 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class DogDTO {
 
-    private Long id;
     private String name;
     private LocalDate birthDate;
     private String breed;
-    private String size;
-    private String personality;
-    private String gender;
+    private SizeEnum size;
+    private PersonalityEnum personality;
+    private GenderEnum gender;
     private Long personId;
 
     public Dog toDog() {
         return Dog.builder()
-                .id(this.id)
                 .name(this.name)
                 .birthDate(this.birthDate)
                 .breed(this.breed)
-                .size(SizeEnum.valueOf(this.size))
-                .personality(PersonalityEnum.valueOf(this.personality))
-                .gender(GenderEnum.valueOf(this.gender))
+                .size((this.size))
+                .personality((this.personality))
+                .gender((this.gender))
                 .personId(this.personId)
                 .build();
     }

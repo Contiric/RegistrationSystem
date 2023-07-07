@@ -10,7 +10,7 @@ public interface DogService {
 
     Logger logger = Logger.getLogger(String.valueOf(DogService.class));
     Long createDog(DogDTO dogDTO) throws PersonNotFoundException;
-    void updateDog(Long id, DogDTO dogDTO) throws DogNotFoundException;
+    DogDTO updateDog(Long id, DogDTO dogDTO) throws DogNotFoundException;
     DogDTO findDogById(Long id) throws DogNotFoundException;
     void deleteDog(Long id) throws DogNotFoundException;
 }

@@ -1,9 +1,7 @@
 package com.pawandfeet.registration.entity;
 
-import com.pawandfeet.registration.dto.AddressDTO;
 import com.pawandfeet.registration.dto.DogDTO;
 import com.pawandfeet.registration.dto.PersonDTO;
-import com.pawandfeet.registration.service.impl.PersonServiceImpl;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,10 +9,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Data
 @Entity
@@ -30,7 +27,7 @@ public class Person {
 
     private String name;
 
-    private Date birthDate;
+    private LocalDate birthDate;
 
     private String email;
 
@@ -39,10 +36,6 @@ public class Person {
     @Enumerated(EnumType.STRING)
     private GenderEnum gender;
 
-    private List<Dog> dogs;
-
-    private Address address;
-
     public PersonDTO toPersonDTO() {
         return PersonDTO.builder()
                 .name(this.name)
@@ -50,8 +43,6 @@ public class Person {
                 .email(this.email)
                 .phone(this.phone)
                 .gender(this.gender)
-                .dogsDTO(this.convertObjectToDTO(dogs))
-                .addressDTO(this.address.toAddressDTO())
                 .build();
     }
 
